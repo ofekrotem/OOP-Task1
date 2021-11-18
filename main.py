@@ -3,7 +3,6 @@ import json
 import os.path
 import sys
 
-from modals.building import Building
 from modals.elevator import Elevator
 
 TIME = 1
@@ -12,7 +11,7 @@ DEST_FLOOR = 3
 ELEVATOR_ID = 5
 
 
-def read_csv(file: str)-> list:
+def read_csv(file: str):
     """
     Convert csv file to python list
     :param file: file name
@@ -26,7 +25,7 @@ def read_csv(file: str)-> list:
     return data
 
 
-def write_csv(file: str, data: list):
+def write_csv(file: str, data: []):
     """
     Create new csv file which contains data
     :param file: file path
@@ -37,7 +36,8 @@ def write_csv(file: str, data: list):
         writer = csv.writer(csv_file)
         writer.writerows(data)
 
-def read_json(file: str)->dict:
+
+def read_json(file: str):
     """
     Convert json file to python list
     :param file: file name
@@ -67,7 +67,6 @@ def assign_call_to_elev(elevators: list[Elevator], c) -> int:
 if __name__ == '__main__':
     building_data = read_json(BUILDING)
     calls = read_csv(CALLS)
-    building = Building(building_data)
     Elevators = []
     for e in building_data['_elevators']:
         elev = Elevator(e)
