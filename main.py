@@ -91,6 +91,31 @@ def read_json(file: str):
 #         building.elevators[index].append(call)
 #         return index
 #     else:
+def find_similar_calls(call: Call, callList: List[Call]) -> List[Call]:
+    calls_to_assign = []
+    time_for_call = ((abs(call.src - call.dest)) / building.elevators[call.elevator_id].speed)
+    if call.type == 1:
+        for c in callList:
+            if c.time < call.time:
+                pass
+            if c.time >= (call.time + time_for_call):
+                break
+            if c.type == 1:
+                if c.src > call.src:
+                    calls_to_assign.append(c)
+    elif call.type == -1:
+        for c in callList:
+            if c.time < call.time:
+                pass
+            if c.time > (call.time + time_for_call):
+                break
+            if c.type == -1:
+                if c.src <= call.src:
+                    calls_to_assign.append(c)
+    if len(calls_to_assign > 0):
+        return calls_to_assign
+    else:
+        return -1
 
 
 def find_close_elevator(dest: int, elevators: List[Elevator]) -> Elevator:
@@ -115,14 +140,11 @@ BUILDING = os.path.join('Ex1_Buildings', sys.argv[1])
 CALLS = os.path.join('Ex1_Calls', sys.argv[2])
 OUTPUT = 'output.csv'
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     building_data = read_json(BUILDING)
     calls = read_csv(CALLS)
     # output = read_csv(OUTPUT)
     building = Building(building_data)
-
-    a = [1, 2, 3, 4, 5]
 
     TIME = 1
     SRC_FLOOR = 2
@@ -130,12 +152,17 @@ if __name__ == '__main__':
     ELEVATOR_ID = 5
 
     for call in calls:
-        src_floor = int(call[SRC_FLOOR])
-        dest_floor = int(call[DEST_FLOOR])
+        if call[ELEVATOR_ID] == -1:
+            src_floor = int(call[SRC_FLOOR])
+            dest_floor = int(call[DEST_FLOOR])
+            elev = find_close_elevator(src_floor, building.elevators)
+            elev.currPosition = dest_floor
+            call[ELEVATOR_ID] = elev.id
+            # res = find_similar_calls(call, calls)
+            # if res != -1:
+            #     for c in res:
+            #         c[ELEVATOR_ID] = elev.id
 
-        elev = find_close_elevator(src_floor, building.elevators)
-        elev.currPosition = dest_floor
-        call[ELEVATOR_ID] = elev.id - 1
 
 
     write_csv(OUTPUT, calls)
