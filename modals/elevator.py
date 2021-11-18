@@ -8,12 +8,8 @@ class Elevator:
         self.minFloor = data['_minFloor']
         self.speed = data['_speed']
         self.id = data['_id']
+        self.call_time = 0
 
-        self.calls_n = 0
-        self.call_counter = 0
-
-    def __lt__(self, other):
-        return self.speed < other.speed
-
-    def calls_num(self, avg: int):
-        self.calls_n = avg * self.speed
+    def time_for_call(self, src: int, dest: int) -> float:
+        dist = abs(int(src) - int(dest))
+        return self.startTime + self.speed / dist + self.stopTime
