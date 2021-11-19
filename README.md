@@ -31,7 +31,6 @@ Our algorithm allocates a fare distribution of calls to each elevator depending 
 
 
 ## UML diagram
-
-![UML](https://ibb.co/nkJS4wQ)
+![image](https://user-images.githubusercontent.com/92383710/142607852-5f7e2e55-be42-42ad-b4a5-405d790617a9.png)
 
 
