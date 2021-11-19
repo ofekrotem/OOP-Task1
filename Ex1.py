@@ -48,8 +48,8 @@ def read_json(file: str):
         return data
 
 
-BUILDING = os.path.join('Ex1_Buildings', sys.argv[1])
-CALLS = os.path.join('Ex1_Calls', sys.argv[2])
+BUILDING = os.path.join(sys.argv[1])
+CALLS = os.path.join(sys.argv[2])
 OUTPUT = 'output.csv'
 
 
